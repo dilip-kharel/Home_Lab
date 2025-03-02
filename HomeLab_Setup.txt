@@ -1,0 +1,8 @@
+
+1. The Home_Lab repo was not being cloned into my laptop.
+	- Permission denied error.
+	- But the other repos were fine, I could push to the main.
+
+2. Use this command to verify repository access
+	-> ssh -T git@github.com
+	-> It asked for the passkey and then it worked when I cloned the repo.
