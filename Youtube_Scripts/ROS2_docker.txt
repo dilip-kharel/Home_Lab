@@ -1,0 +1,70 @@
+02-23-25:
+---------
+
+1. Dockerfile
+	# Use the official ROS 2 Humble core image (Ubuntu 22.04 base)
+	FROM ros:humble
+
+	# Install common development tools and ROS2 libraries
+	RUN apt-get update && apt-get install -y \
+		build-essential \
+		cmake \
+		gdb \
+		python3-colcon-common-extensions \
+		python3-ament-package \
+		ros-humble-rclcpp \
+		&& apt-get clean
+
+	# Setup ROS2 workspace
+	WORKDIR /root/ros2_ws
+	RUN mkdir -p src
+
+	# Default command: start a bash shell with ROS2 sourced
+	CMD ["/bin/bash", "-c", "source /opt/ros/humble/setup.bash && exec bash"]
+
+
+2. Build the Image
+	docker build -t ros2-dev .
+
+3. Run the container and mount to project folder.
+	docker run -it --name ros2_dev_container -v /home/debian-admin/ROS2_docker_project:/root/ros2_ws ros2-dev
+		--- This creates a new container with the name ros2_dev_container.
+	
+	- To work in the same container:
+	docker exec -it ros2_dev_container bash
+
+
+4. Create a Minimal ROS 2 package
+	source /opt/ros/humble/setup.bash
+	cd /root/ros2_ws
+	mkdir -p src && cd src
+	ros2 pkg create --build-type ament_cmake my_cpp_pkg
+
+
+******** sudo chown -R debian-admin:debian-admin /home/debian-admin/ROS2_docker_project/*
+
+
+5. Add a simple node to /root/ros2_ws/src/my_cpp_pkg/src/hello_node.cpp
+
+	#include <cstdio>
+
+	int main(int, char**)
+	{
+	  printf("Hello from ROS 2!\n");
+	  return 0;
+	}
+
+	- Add this to the CMakeLists.txt in my_cpp_pkg
+
+	add_executable(hello_node src/hello_node.cpp)
+	install(TARGETS
+	  hello_node
+	  DESTINATION lib/${PROJECT_NAME}
+	)
+
+
+6. Build and run the node.
+	cd /root/ros2_ws
+	colcon build
+	source install/setup.bash
+	ros2 run my_cpp_pkg hello_node
