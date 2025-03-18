@@ -6,3 +6,25 @@
 2. Use this command to verify repository access
 	-> ssh -T git@github.com
 	-> It asked for the passkey and then it worked when I cloned the repo.
+
+---------------------------------
+
+I think I know how to continue with getting better at this Coding Project Explorer (CPE) stuff.
+
+Keep working on projects - anything that your heart desires.
+- Explore everything.
+
+-- Then, make it into a video in your desktop.
+- This will be the professional personality.
+- Once you log into your desktop, it's purely business!
+
+-- Your laptop, which is your new musical instrument that you'll carry everywhere and practice all the time.
+
+----------------------------------
+
+This will be the format of this project/repo.
+
+-- The thought process, code, commands, everything in it's raw form.
+-- THE JOURNEY - EXPLORATION - is what we're recording.
+
+-- Just like Rick Steves but Europe of Coding Projects.
